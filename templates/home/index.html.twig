@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block carousel %}{% endblock %}
+
+{% block content %}
+	<!-- Three columns of text below the carousel -->
+	<h3>Nos meilleurs ventes</h3>
+	<p>Découvrez  les articles les plus vendus.</p>
+
+
+	<div class="row">
+		{% for product in products %}
+			<div class="col-md-3">
+				{% include 'product/single_product.html.twig'%}
+			</div>
+		{% endfor %}
+	</div>
+	<!-- /.row -->
+
+
+	<!-- START THE FEATURETTES -->
+
+	<hr class="featurette-divider">
+
+	<div class="row featurette">
+		<div class="col-md-7">
+			<h2 class="featurette-heading">Une équipe de passsionnéé
+				<span class="text-muted">avec des professionnels a votre écoute</span>
+			</h2>
+			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis</p>
+		</div>
+		<div class="col-md-5">
+			<img src="{{ asset('assets/img/first.jpg') }}" class="img-fluid" alt="Un service de Qualité">
+		</div>
+	</div>
+
+	<hr class="featurette-divider">
+
+	<div class="row featurette">
+		<div class="col-md-7 order-md-2">
+			<h2 class="featurette-heading">Venez à notre rencontre
+				<span class="text-muted">Authenticité</span>
+			</h2>
+			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis</p>
+		</div>
+		<div class="col-md-5 order-md-1">
+			<img src="{{ asset('assets/img/second.jpg') }}" class="img-fluid" alt="Une boutique ouverte toute l'année">
+		</div>
+	</div>
+
+
+	<hr
+	class="featurette-divider">
+
+<!-- /END THE FEATURETTES -->
+
+{% endblock %}

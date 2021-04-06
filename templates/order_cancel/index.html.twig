@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur de paiement - True Clothes Paris
+{% endblock %}
+
+{% block content %}
+	<h2>Erreur de paiement</h2>
+	<p>
+		Bonjour
+		<strong>{{ order.user.firstname }}
+			{{ order.user.lastname }}</strong>,<br/><br/>
+		Le paiement a echoué pour votre commande n°<strong>{{ order.reference }}</strong>.<br/>
+		Une confirmation d'erreur vient de vous être envoyer par email a l'adresse
+		<stong>{{ order.user.email }}</stong>.
+	</p>
+	<a href="{{ path('order') }}" class="btn btn-success">Réessayer le paiement</a>
+
+{% endblock %}
