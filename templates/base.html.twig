@@ -3,9 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="La boutique qui vend que des produits controller.">
+		<meta name="description" content="Achetez les baskets les plus populaires, y compris les Adidas Yeezy et les Jordans Rétro ,streetwear, Supreme">
 		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-		<meta name="generator" content="Jekyll v4.1.1">
+		<meta
+		name="generator" content="Jekyll v4.1.1">
+		{# <meta name="google-site-verification" content="cw0neOMJXHRd_MCQ9lIUXtwEZ0fLoBt7-0r-9K0yhfc" #}
 		<title>
 			{% block title %}
 				True Clothes Paris - Made in Paris
@@ -14,7 +16,11 @@
 
 		<!-- Bootstrap core CSS -->
 		<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-		<link rel="stylesheet" href="{{ asset('assets/css/trueclothesparis.css') }}"> {% block javascript %}{% endblock %}
+		<link rel="stylesheet" href="{{ asset('assets/tarteaucitron/css/tarteaucitron.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/trueclothesparis.css') }}">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400&display=swap" rel="stylesheet"> 
+		{% block javascript %}{% endblock %}
 
 		<style>
 			.bd-placeholder-img {
@@ -34,49 +40,100 @@
 		</style>
 		<!-- Custom styles for this template -->
 		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+
+		<script type="text/javascript" src="{{ asset('assets/tarteaucitron/tarteaucitron.js') }}"></script>
+		<script type="text/javascript">
+			tarteaucitron.init({
+
+"hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+"cookieName": "tarteaucitron", /* Cookie name */
+
+"orientation": "middle", /* Banner position (top - bottom) */
+
+"groupServices": false, /* Group services by category */
+
+"showAlertSmall": false, /* Show the small banner on bottom right */
+"cookieslist": false, /* Show the cookie list */
+
+"closePopup": false, /* Show a close X on the banner */
+
+"showIcon": true,
+/* Show cookie icon to manage cookies */
+// "iconSrc": "", /* Optionnal: URL or base64 encoded image */
+"iconPosition": "BottomRight", /* BottomRight, BottomLeft, TopRight and TopLeft */
+
+"adblocker": false, /* Show a Warning if an adblocker is detected */
+
+"DenyAllCta": true, /* Show the deny all button */
+"AcceptAllCta": true, /* Show the accept all button when highPrivacy on */
+"highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+
+"handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+"removeCredit": false, /* Remove credit link */
+"moreInfoLink": true, /* Show more info link */
+
+"useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+"useExternalJs": false,
+/* If false, the tarteaucitron.js file will be loaded */
+
+// "cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for multisite */
+
+"readmoreLink": "", /* Change the default readmore link */
+
+"mandatory": true, /* Show a message about mandatory cookies */
+});
+
+tarteaucitron.parameters.privacyUrl = "{{ path('legal_notice') }}";
+
+tarteaucitron.user.googletagmanagerId = 'G-4TYFLZWZG9';
+(tarteaucitron.job = tarteaucitron.job || []).push('googletagmanager');
+
+tarteaucitron.user.gtagUa = 'G-4TYFLZWZG9';
+(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+		</script>
 	</head>
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top  bg-dark">
-				<a class="navbar-brand" href="{{ path('home') }}">True Clothes Paris</a>
+				<a class="navbar-brand text-yellow" href="{{ path('home') }}">True Clothes Paris</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="{{ path('products') }}">Nos produits</a>
+							<a class="nav-link text-yellow" href="{{ path('products') }}" title="nos artciles">Nos Articles</a>
 						</li>
-						{# <li class="nav-item active">
-							<a class="nav-link" href="#">Qui somme-nous ?</a>
-						</li> #}
 						<li class="nav-item active">
-							<a class="nav-link" href="{{ path('contact') }}">Contact</a>
+							<a class="nav-link text-yellow" href="{{ path('contact') }}" title="contact">Contact</a>
 						</li>
-
 					</ul>
+					
 					<div class="navbar-item-custom">
 						{% if app.user %}
-							<a href="{{ path('account') }}">Mon compte
+							<a href="{{ path('account') }}" title="mon compte">Mon compte
 								<small>({{ app.user.firstname }})</small>
 							</a>
 							|
-							<a href="{{ path('app_logout') }}">Déconnexion</a>
+							<a href="{{ path('app_logout') }}" title="deconnexion">Déconnexion</a>
 						{% else %}
-							<a href="{{ path('app_login') }}">Connexion</a>
+							<a href="{{ path('app_login') }}" title="connexion">Connexion</a>
 							|
-							<a href="{{ path('register') }}">Inscription</a>
+							<a href="{{ path('register') }}" title="inscription">Inscription</a>
 						{% endif %}
 					</div>
-					<a href="{{ path('cart') }}">
-						<img src="{{ asset('assets/img/shopping-cart.png') }}" class="cart-icon" alt="Mon panier">
-					</a>
+
+					{% if app.user %}
+						<a href="{{ path('cart') }}">
+							<img src="{{ asset('assets/img/shopping-cart.png') }}" class="cart-icon" alt="Mon panier">
+						</a>
+					{% endif %}
 				</div>
 			</nav>
 		</header>
 
 		<main role="main">
-
 			{% if block('carousel')is defined %}
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -93,7 +150,7 @@
 										<h1>{{ header.title }}</h1>
 										<p>{{ header.content }}</p>
 										<p>
-											<a class="btn btn-lg btn-info" href="{{ header.btnUrl }}" role="button">{{ header.btnTitle }}</a>
+											<a class="btn btn-lg btn-primary text-yellow background-grey border-grey" href="{{ header.btnUrl }}" role="button">{{ header.btnTitle }}</a>
 										</p>
 									</div>
 								</div>
@@ -119,11 +176,11 @@
 				<!--/.container-->
 
 				<!-- FOOTER -->
-				<footer class="footer-custom">
+				<footer class="footer-custom text-yellow">
 					<p>
 						&copy; True Clothes Paris<br/>
 						<small>La boutique True Clothes Paris<br/>
-							<a href="#">Privacy</a>&middot;
+							<a href="{{ path('legal_notice') }}">Mentions legale</a>&middot;
 							<a href="#">Terms</a>
 						</small>
 					</p>

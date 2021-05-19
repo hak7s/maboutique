@@ -48,7 +48,7 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Merci de saisir votre adresse email'
                 ]
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mots de passe et la confirmation doivent etre identique.',
                 'label' => 'Votre mots de passe',

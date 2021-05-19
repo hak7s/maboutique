@@ -1,0 +1,22 @@
+{{ data|raw }}
+<hr/>
+<table class="table mt-3" border="2" style="border-collapse: collapse">
+	<thead>
+		<tr>
+			<th scope="col">Produit</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for order in orders %}
+			<tr>
+				<td>
+					<small>{{ order.product.name }}</small>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<div class="text-right mb-5" style="text-align: right">
+	<b>Nombre de produit :</b>
+	{{ orders|length }}
+</div>

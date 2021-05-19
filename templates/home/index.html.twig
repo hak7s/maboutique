@@ -3,55 +3,37 @@
 {% block carousel %}{% endblock %}
 
 {% block content %}
-	<!-- Three columns of text below the carousel -->
-	<h3>Nos meilleurs ventes</h3>
-	<p>Découvrez  les articles les plus vendus.</p>
+<!-- Three columns of text below the carousel -->
+<h1>True clothes paris les nouveautés du moments</h1>
+<p>Découvrez les articles les plus demandée</p>
+
+<div class="row">
+	{% for product in products %}
+		<div class="col-md-3">
+			{% include 'product/single_product.html.twig'%}
+		</div>
+	{% endfor %}
+</div>
+<!-- /.row -->
 
 
-	<div class="row">
-		{% for product in products %}
-			<div class="col-md-3">
-				{% include 'product/single_product.html.twig'%}
-			</div>
-		{% endfor %}
+<!-- START THE FEATURETTES -->
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+	<div class="col-md-7">
+		<h2 class="featurette-heading">Always Authentic
+			<span class="text-muted">
+				Never Fake
+			</span>
+		</h2>
+		<p class="lead">
+			Notre passion pour les baskets authentiques et le streetwear est profonde. True clothes paris a été construit sur la conviction fondamentale que vous méritez d'acquerire des baskets et du streetwear 100% authentiques et inutilisés. Sur notre plateforme, chaque produit est vérifié, authentifié en toute sécurité.</p>
 	</div>
-	<!-- /.row -->
-
-
-	<!-- START THE FEATURETTES -->
-
-	<hr class="featurette-divider">
-
-	<div class="row featurette">
-		<div class="col-md-7">
-			<h2 class="featurette-heading">Une équipe de passsionnéé
-				<span class="text-muted">avec des professionnels a votre écoute</span>
-			</h2>
-			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis</p>
-		</div>
-		<div class="col-md-5">
-			<img src="{{ asset('assets/img/first.jpg') }}" class="img-fluid" alt="Un service de Qualité">
-		</div>
+	<div class="col-md-5">
+		<img src="{{ asset('assets/img/groot-sneakers.jpeg') }}" class="img-fluid" alt="photo groot sneakers">
 	</div>
+</div>
 
-	<hr class="featurette-divider">
-
-	<div class="row featurette">
-		<div class="col-md-7 order-md-2">
-			<h2 class="featurette-heading">Venez à notre rencontre
-				<span class="text-muted">Authenticité</span>
-			</h2>
-			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis</p>
-		</div>
-		<div class="col-md-5 order-md-1">
-			<img src="{{ asset('assets/img/second.jpg') }}" class="img-fluid" alt="Une boutique ouverte toute l'année">
-		</div>
-	</div>
-
-
-	<hr
-	class="featurette-divider">
-
-<!-- /END THE FEATURETTES -->
-
-{% endblock %}
+<hr <!-- /END THE FEATURETTES --> {% endblock %}

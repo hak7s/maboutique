@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,7 +20,7 @@ class ContactType extends AbstractType
                 'label' => 'Votre nom',
                 'attr' => [
                     'placeholder' => 'Entrez votre nom'
-                ]
+                ],
             ])
             ->add('prenom',TextType::class,[
                 'label' => 'Votre prénom',
@@ -42,7 +43,7 @@ class ContactType extends AbstractType
             ->add('submit', SubmitType::class,[
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'btn-block btn-success'
+                    'class' => 'btn-block btn-success text-yellow background-grey border-grey'
                 ]
             ])
         ;
@@ -51,7 +52,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => Contact::class,
         ]);
     }
 }

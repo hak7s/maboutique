@@ -1,18 +1,28 @@
 body {
     position: relative;
+    background-color: #f1f1f1;
+    font-family: 'Dosis', sans-serif;
+
 }
 
 .navbar-item-custom,
-.navbar-item-custom a {
-    color: white;
+.navbar-item-custom a,
+.text-yellow {
+    color: #fdec6e !important;
 }
-
+.background-grey{
+   background:  #343a3e !important;
+}
+.border-grey{
+    border-color:  #343a3e !important;
+ }
 .footer-custom {
     text-align: center;
     position: absolute;
     width: 100%;
-    background-color: #dfeaff;
+    background-color: #343a3e;
     padding-top: 25px;
+    top: 100%;
     margin-top: 50px;
 }
 
@@ -32,17 +42,13 @@ body {
     margin-bottom: 10px;
 }
 
-.product-item .product-price {
+.product-item {
     font-size: 14px;
     font-weight: bold;
 }
 
 .product-container {
     margin-bottom: 150px;
-}
-
-.product-page-price {
-    font-size: 19px;
 }
 
 .cart-icon {
@@ -56,7 +62,7 @@ body {
 }
 
 .form-check {
-    background-color: #f4f8ff;
+    background-color: #fdec6e;
     padding: 20px 65px;
     margin-top: 7px;
 }
@@ -65,23 +71,16 @@ body {
     font-weight: bold;
 }
 
-.order-summary {
-    background-color: #f4f8ff;
-    padding: 20px;
-    margin-top: 22px;
-}
-.account-item{
-    background-color:#f1f2f6;
+
+
+.account-item {
+    background-color: #fdec6e;
     padding: 70px;
 }
 
 .account-item a {
     text-transform: uppercase;
     font-size: 13px;
-    color: #4b6584;
+    color: black;
     font-weight: bold;
-}
-.account-item a:hover {
-    color: #778ca3;
-    text-decoration: none;
 }

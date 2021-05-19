@@ -38,9 +38,8 @@ class ChangePasswordType extends AbstractType
                     'placeholder' => 'Veuillez saisir votre mot de passe actuel'
                 ]
             ])
-            ->add('new_password',RepeatedType::class,[
+            ->add('plainPassword',RepeatedType::class,[
                 'type'=> PasswordType::class,
-                'mapped'=> false,
                 'invalid_message'=>'Le mots de passe et la confirmation doivent etre identique.',
                 'label'=>'Mon nouveau mot de passe',
                 'required'=>true,

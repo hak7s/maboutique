@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Classe\Mail;
+use App\Service\MailService;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,10 +15,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
     private $entityManager;
+    private $mailService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, MailService $mailService)
     {
         $this->entityManager = $entityManager;
+        $this->mailService = $mailService;
     }
 
     /**
@@ -33,26 +35,22 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+            $password = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
-            $search_email = $this->entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
+            $this->mailService->sendEmail(
+                $user->getEmail(),
+                $user->getFirstname(),
+                'Bienvenue sur True Clothes Paris',
+                'email/contact_success_email.html.twig',
+                [
+                    'data' => "Bonjour" . $user->getFirstname() . "<br/>Bienvenue dans votre boutique en ligne. ",
+                ]
+            );
 
-            if (!$search_email) {
-                $password = $encoder->encodePassword($user, $user->getPassword());
-
-                $user->setPassword($password);
-
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
-
-                $mail = new Mail();
-                $content = "Bonjour" . $user->getFirstname() . "<br/>Bienvenue dans votre boutique en ligne ";
-                $mail->send($user->getEmail(), $user->getFirstname(), 'Bienvenue sur True Clothes Paris', $content);
-
-                $notification = "Votre inscription s'est correctement déroulée .Vous pouvez dés a présent vous connecter à votre compte.";
-            } else {
-                $notification = "L'email renseigné existe déja.";
-            }
+            $notification = "Votre inscription s'est correctement déroulée .Vous pouvez dés a présent vous connecter à votre compte.";
         }
 
         return $this->render('register/index.html.twig', [

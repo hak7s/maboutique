@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use DateTime;
-use App\Classe\Mail;
+use App\Service\MailService;
 use App\Entity\User;
 use App\Entity\ResetPassword;
 use App\Form\ResetPasswordType;
@@ -11,18 +11,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ResetPasswordController extends AbstractController
 {
     private $entityManager;
+    private $mailService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, MailService $mailService)
     {
         $this->entityManager = $entityManager;
+        $this->mailService = $mailService;
     }
-
     /**
      * @Route("/mot-de-passe-oublie", name="reset_password")
      */
@@ -44,18 +46,25 @@ class ResetPasswordController extends AbstractController
                 $reset_password->setCreatedAt(new DateTime());
                 $this->entityManager->persist($reset_password);
                 $this->entityManager->flush();
+                
 
                 //2 : Envoyer un email a lutilisateur avec un lien lui permettant de mettre a jour son mot de passe.
                 $url = $this->generateUrl('update_password', [
                     'token' => $reset_password->getToken()
-                ]);
+                ], UrlGeneratorInterface::ABSOLUTE_URL);
 
                 $content = "Bonjour" . $user->getFirstname() . "<br/>Vous avez demandé a réinitialiser  votre mot de passer sur le site trueclotheparis.<br/><br/>";
-                $content .= "Merci de bien vouloir cliquer sur le lien suivant pour <a href='" . $url . "'>mettre à jour votre mot de passse </a>. ";
-
-                $mail = new Mail();
-                $mail->send($user->getEmail(), $user->getFirstname() . ' ' . $user->getLastname(), 'Réinitialiser votre mot de passe sur trueclotheparis', $content);
-
+                $content .= "Merci de bien vouloir cliquer sur le lien suivant pour <a href='" . $url . "'> mettre à jour votre mot de passse </a>. ";
+                
+                $this->mailService->sendEmail(
+                    $user->getEmail(),
+                    $user->getFirstname(). ' ' . $user->getLastname(),
+                    'Réinitialiser votre mot de passe sur trueclotheparis',
+                    'email/contact_success_email.html.twig',
+                    [
+                        'data'=>$content,
+                    ]
+                );
 
                 $this->addFlash('notice', 'Vous allez recevoir dans un instant un mail avec la procedur pour réinitialiser votre mot de passe.');
             } else {
@@ -80,7 +89,7 @@ class ResetPasswordController extends AbstractController
         //Verifier si le createdAT = now - 3h
         $now = new DateTime();
         if ($now > $reset_password->getCreatedAt()->modify('+ 3 hour')) {
-            $this->addFlash('notice', 'Votre demande de mot de passe a expiré.Merci de la renouveller');
+            $this->addFlash('notice', 'Votre demande de mot de passe a expiré. Merci de la renouveller');
             return $this->redirectToRoute('reset_password');
         }
         //Rendre une vue avec mot de passe et confirmer votre mot de passe 

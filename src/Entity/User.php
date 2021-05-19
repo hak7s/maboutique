@@ -7,10 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -48,18 +51,17 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
-     */
-    private $addresses;
-
-    /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
      */
     private $orders;
 
+    /**
+     * @RollerworksPassword\PasswordRequirements(requireLetters=true, requireNumbers=true, requireCaseDiff=true)
+     */
+    private $plainPassword;
+
     public function __construct()
     {
-        $this->addresses = new ArrayCollection();
         $this->orders = new ArrayCollection();
     }
 
@@ -175,36 +177,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Address[]
-     */
-    public function getAddresses(): Collection
-    {
-        return $this->addresses;
-    }
-
-    public function addAddress(Address $address): self
-    {
-        if (!$this->addresses->contains($address)) {
-            $this->addresses[] = $address;
-            $address->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddress(Address $address): self
-    {
-        if ($this->addresses->removeElement($address)) {
-            // set the owning side to null (unless already changed)
-            if ($address->getUser() === $this) {
-                $address->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Order[]
      */
@@ -231,6 +204,16 @@ class User implements UserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword) {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
