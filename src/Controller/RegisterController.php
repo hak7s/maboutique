@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
-use App\Service\MailService;
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
@@ -44,9 +45,10 @@ class RegisterController extends AbstractController
                 $user->getEmail(),
                 $user->getFirstname(),
                 'Bienvenue sur True Clothes Paris',
-                'email/contact_success_email.html.twig',
+                'email/register.html.twig',
                 [
-                    'data' => "Bonjour" . $user->getFirstname() . "<br/>Bienvenue dans votre boutique en ligne. ",
+                    'user' => $user,
+                    'url' => $this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_PATH)
                 ]
             );
 

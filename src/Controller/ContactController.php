@@ -36,8 +36,6 @@ class ContactController extends AbstractController
             $em->persist($contact);
             $em->flush();
             
-
-
             $this->mailService->sendEmail(
                 'trueclothesparis@gmail.com',
                 $contact->getNom().' '.$contact->getPrenom(),

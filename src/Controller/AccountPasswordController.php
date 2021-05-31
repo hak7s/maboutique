@@ -14,7 +14,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountPasswordController extends AbstractController
 {
     private $entityManager;
-
     /**
      * AccountPasswordController constructor.
      * @param $entityManager

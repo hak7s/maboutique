@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 class MailService
 {
@@ -21,12 +22,10 @@ class MailService
     {
         $email = (new TemplatedEmail())
             ->from('trueclothesparis@gmail.com')
-            ->to($to)
+            ->to(new Address($to, $name))
             ->subject($subject)
             ->htmlTemplate($template)
             ->context($templateParams);
-
-        $email->getHeaders()->addHeader('X-MJ-TemplateID', 2717244);
 
         $this->mailer->send($email);
     }
